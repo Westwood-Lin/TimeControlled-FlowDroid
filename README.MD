@@ -4,6 +4,18 @@ This repository hosts the FlowDroid data flow analysis tool. FlowDroid staticall
 Its goal is to provide researchers and practitioners with a tool and library on which they can base their own research projects and
 product implementations. We are happy to see that FlowDroid is now widely used in academia as well as industry.
 
+# fork & modification
+TimeControlled-FlowDroid: It is a fork version of the original FlowDroid repo. 
+My main goal is to solve the significant time consumption problem during the Path Reconstruction , 
+which has traditionally been a major bottleneck.
+The traditional path reconstruction timeout is to control the time spent on reconstructing a specific path, 
+not for the entire phase, and the documentation does not indicate this.
+Therefore, I fork it and have done a little customization.
+- 定制介绍
+TimeControlled-FlowDroid: 是原始 FlowDroid 库的一个分支。我定制这个版本的主要目标是解决路径重建阶段的显著时间消耗问题，这在传统上一直是一个主要瓶颈。
+传统的path reconstruction timeout 是对具体某条path重建的时间控制，没有对整个阶段的时间控制，同时文档也没有指出这一点。
+因此，我进行了定制。
+
 ## Obtaining The Tool
 
 You can either build FlowDroid on your own using Maven, or you can download a release from here on Github.
