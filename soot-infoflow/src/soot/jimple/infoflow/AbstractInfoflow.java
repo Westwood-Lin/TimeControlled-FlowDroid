@@ -132,9 +132,6 @@ import soot.options.Options;
  *
  */
 public abstract class AbstractInfoflow implements IInfoflow {
-	//todo
-	public static long pathReconstructionTotalTime = 3600L;
-
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected InfoflowResults results = null;

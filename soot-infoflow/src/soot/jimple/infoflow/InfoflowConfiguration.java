@@ -587,6 +587,15 @@ public class InfoflowConfiguration {
 		private long pathReconstructionTimeout = 0;
 		private int pathReconstructionBatchSize = 5;
 
+		// TODO ; the total time for path reconstruction phase; exceeds leading to interrupt & break
+		private long pathReconstructionTotalTime = 3600L;
+		public long getPathReconstructionTotalTime() {
+			return pathReconstructionTotalTime;
+		}
+
+		public void setPathReconstructionTotalTime(long pathReconstructionTotalTime) {
+			this.pathReconstructionTotalTime = pathReconstructionTotalTime;
+		}
 		/**
 		 * Copies the settings of the given configuration into this configuration object
 		 * 

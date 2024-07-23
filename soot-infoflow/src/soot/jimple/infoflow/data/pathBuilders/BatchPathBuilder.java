@@ -32,19 +32,20 @@ public class BatchPathBuilder extends AbstractAbstractionPathBuilder {
         this.innerBuilder = innerBuilder;
     }
 
-    //todo add a new control: Total time for computeTaintPaths(startTime\if)
     @Override
     public void computeTaintPaths(Set<AbstractionAtSink> res) {
-        long startTime = System.nanoTime(); // 记录开始时间
         Set<AbstractionAtSink> batch = new HashSet<>();
         Iterator<AbstractionAtSink> resIt = res.iterator();
         int batchId = 1;
 
+        //TODO(line 41~53) add a new control: Total time for computeTaintPaths(startTime\if)
+        long startTime = System.nanoTime(); // 记录开始时间
+        long totalTime=manager.getConfig().getPathConfiguration().getPathReconstructionTotalTime();
         while (resIt.hasNext()) {
             long executionNanoTime = System.nanoTime() - startTime;
-            if (executionNanoTime / 1E9 >= AbstractInfoflow.pathReconstructionTotalTime) {
+            if (executionNanoTime / 1E9 >= totalTime) {
                 logger.info("Path Reconstruction has terminated because it exceeds the AbstractInfoflow.pathReconstructionTotalTime.");
-                logger.info("The AbstractInfoflow.pathReconstructionTotalTime is set to " + AbstractInfoflow.pathReconstructionTotalTime + "seconds");
+                logger.info("The AbstractInfoflow.pathReconstructionTotalTime is set to " + totalTime + "seconds");
                 logger.info("Now batchId:" + batchId + "; And remain res:" + (res.size() - batchId * batch.size()));
                 break;
             } else {
