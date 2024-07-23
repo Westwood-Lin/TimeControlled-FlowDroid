@@ -26,6 +26,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>17</source>
+					<target>17</target>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -104,6 +108,13 @@
 	</build>
 
 	<dependencies>
+		<!-- todo; 2024-07-17;  yaml -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.30</version>
+		</dependency>
+
 		<dependency>
 			<groupId>de.upb.cs.swt</groupId>
 			<artifactId>heros</artifactId>

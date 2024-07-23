@@ -741,15 +741,20 @@ public class IFDSSolver<N, D extends FastSolverLinkedNode<D, N>, I extends BiDiI
 
 		public void runInternal() {
 			final N target = edge.getTarget();
-			if (icfg.isCallStmt(target)) {
-				processCall(edge);
-			} else {
-				// note that some statements, such as "throw" may be
-				// both an exit statement and a "normal" statement
-				if (icfg.isExitStmt(target))
-					processExit(edge);
-				if (!icfg.getSuccsOf(target).isEmpty())
-					processNormalFlow(edge);
+			try{//todo; 2024-07-21; add a null exception dealing.
+				if (target!=null && icfg.isCallStmt(target)) {
+					processCall(edge);
+				} else {
+					// note that some statements, such as "throw" may be
+					// both an exit statement and a "normal" statement
+					if (target!=null && icfg.isExitStmt(target))
+						processExit(edge);
+					if (target!=null && !icfg.getSuccsOf(target).isEmpty())
+						processNormalFlow(edge);
+				}
+			}
+			catch (RuntimeException re){
+//				re.printStackTrace();
 			}
 		}
 
