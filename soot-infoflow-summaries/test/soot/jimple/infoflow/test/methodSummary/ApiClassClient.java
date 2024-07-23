@@ -4,7 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectOutputStream.PutField;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class ApiClassClient {
 	public Object source() {
@@ -12,6 +16,10 @@ public class ApiClassClient {
 	}
 
 	public String stringSource() {
+		return "99";
+	}
+
+	public String stringSource2() {
 		return "99";
 	}
 
@@ -177,7 +185,7 @@ public class ApiClassClient {
 		sink(t);
 	}
 
-	public void sink(Object out) {
+	public static void sink(Object out) {
 		System.out.println(out);
 	}
 
@@ -333,5 +341,29 @@ public class ApiClassClient {
 		d.stringField = stringSource();
 		String ret = d.computeString((s) -> "Untainted string");
 		sink(ret);
+	}
+
+	public void iterativeApplyIsOverapproximation() {
+		Map<String, String> map = new HashMap<>();
+		// The summary map.values -> return should only be applied
+		// if the incoming taint is map.values. But if the incoming
+		// taint is param1, then the iterative approach yields
+		// param1 -> map.values -> return, which over-approximates Map.put.
+		String oldVal = map.put("XXX", stringSource());
+		sink(oldVal);
+	}
+
+	public void doubleSetterCall() {
+		Data d = new Data();
+		d.setData(stringSource());
+		d.setData(stringSource2());
+		sink(d.getData());
+	}
+
+	public void stringAppendCall() {
+		Data d = new Data();
+		d.appendString(stringSource());
+		d.appendString(stringSource2());
+		sink(d.getString());
 	}
 }
